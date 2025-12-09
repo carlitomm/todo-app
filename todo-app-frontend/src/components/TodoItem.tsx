@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { deleteTodo, toggleComplete } from "../store/slices/todoSlice";
+import { deleteTodo, deleteTodoApi, toggleComplete, updateTodoApi } from "../store/slices/todoSlice";
 import { Link } from "react-router-dom";
 import type { ITodo } from "../types/todo";
 
@@ -13,7 +13,10 @@ export default function TodoItem({ todo }: any) {
                 <input
                     type="checkbox"
                     checked={todo.completed}
-                    onChange={() => dispatch(toggleComplete(todo.id))}
+                    onChange={() => {
+                        dispatch(toggleComplete(todo.id))
+                        dispatch(updateTodoApi({ ...todo, completed: !todo.completed }));
+                    }}
                     className="mt-1 h-5 w-5 accent-blue-600"
                 />
 
@@ -36,7 +39,10 @@ export default function TodoItem({ todo }: any) {
                         </Link>
 
                         <button
-                            onClick={() => dispatch(deleteTodo(todo.id))}
+                            onClick={() => {
+                                dispatch(deleteTodo(todo.id));
+                                dispatch(deleteTodoApi(todo.id));
+                            }}
                             className="text-red-600 hover:underline"
                         >
                             Delete

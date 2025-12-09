@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import type { RootState } from "../store/store";
-import { addTodo, updateTodo } from "../store/slices/todoSlice";
+import { addTodo, createTodo, updateTodo, updateTodoApi } from "../store/slices/todoSlice";
 import { v4 as uuidv4 } from "uuid";
 
 interface Props {
@@ -27,7 +27,8 @@ export default function TodoForm({ editId }: Props) {
         e.preventDefault();
 
         if (editId) {
-            dispatch(updateTodo({
+
+            const editedTodo = {
                 id: editId,
                 title,
                 description,
@@ -35,12 +36,15 @@ export default function TodoForm({ editId }: Props) {
                 completed: existing!.completed,
                 categoryId,
                 createdAt: existing!.createdAt
-            }));
+            }
+
+            dispatch(updateTodo(editedTodo));
+            dispatch(updateTodoApi(updatedTodo));
             navigate("/");
             return;
         }
 
-        dispatch(addTodo({
+        const newTodo = {
             id: uuidv4(),
             title,
             description,
@@ -48,7 +52,10 @@ export default function TodoForm({ editId }: Props) {
             completed: false,
             categoryId,
             createdAt: new Date().toISOString()
-        }));
+        }
+
+        dispatch(addTodo(newTodo));
+        dispatch(createTodo(newTodo));
 
         setTitle("");
         setDescription("");
