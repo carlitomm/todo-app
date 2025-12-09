@@ -1,28 +1,36 @@
 import { useSelector } from "react-redux";
 import type { RootState } from "../store/store";
 import TodoItem from "./TodoItem";
+import { selectProcessedTodos } from "../store/slices/todoSlice";
 
 
 export default function TodoList() {
-    const todos = useSelector((state: RootState) => state.todos.todos);
+    const todos = useSelector(selectProcessedTodos);
     const categories = useSelector((state: RootState) => state.categories.categories);
 
     return (
-        <div>
-            {categories.map((category: any) => (
-                <div key={category.id}>
-                    <h3>{category.name}</h3>
+        <div className="mt-8 space-y-8">
 
-                    {todos
-                        .filter((t: any) => t.categoryId === category.id)
-                        .map((t: any) => <TodoItem key={t.id} todo={t} />)}
+            {categories.map(cat => (
+                <div key={cat.id}>
+                    <h2 className="text-lg font-semibold text-gray-800 mb-4">{cat.name}</h2>
+
+                    <div className="space-y-3">
+                        {todos
+                            .filter(todo => todo.categoryId === cat.id)
+                            .map(todo => (
+                                <TodoItem key={todo.id} todo={todo} />
+                            ))}
+                    </div>
                 </div>
             ))}
 
-            <h3>Other</h3>
-            {todos
-                .filter((t: any) => !t.categoryId)
-                .map((t: any) => <TodoItem key={t.id} todo={t} />)}
+            <h2 className="text-lg font-semibold text-gray-800 mb-4">Other</h2>
+            <div className="space-y-3">
+                {todos
+                    .filter(todo => !todo.categoryId)
+                    .map(todo => <TodoItem key={todo.id} todo={todo} />)}
+            </div>
         </div>
     );
 }

@@ -1,35 +1,51 @@
 import { useDispatch } from "react-redux";
 import { deleteTodo, toggleComplete } from "../store/slices/todoSlice";
 import { Link } from "react-router-dom";
+import type { ITodo } from "../types/todo";
 
 export default function TodoItem({ todo }: any) {
     const dispatch = useDispatch();
 
     return (
-        <div style={{
-            border: "1px solid #ddd",
-            padding: "10px",
-            marginBottom: "10px"
-        }}>
-            <input
-                type="checkbox"
-                checked={todo.completed}
-                onChange={() => dispatch(toggleComplete(todo.id))}
-            />
+        <div className="bg-white p-4 rounded-xl shadow border border-gray-200 flex justify-between items-start">
 
-            <strong style={{ textDecoration: todo.completed ? "line-through" : "none" }}>
-                {todo.title}
-            </strong>
+            <div className="flex gap-3">
+                <input
+                    type="checkbox"
+                    checked={todo.completed}
+                    onChange={() => dispatch(toggleComplete(todo.id))}
+                    className="mt-1 h-5 w-5 accent-blue-600"
+                />
 
-            <div>{todo.description}</div>
-            <small>Due: {todo.dueDate || "No date"}</small>
+                <div>
+                    <div className={`font-semibold text-lg ${todo.completed ? "line-through text-gray-400" : "text-gray-900"}`}>
+                        {todo.title}
+                    </div>
 
-            <div style={{ marginTop: "10px" }}>
-                <Link to={`/edit/${todo.id}`}>Edit</Link>
-                <button onClick={() => dispatch(deleteTodo(todo.id))}>
-                    Delete
-                </button>
+                    {todo.description && (
+                        <div className="text-gray-600 text-sm mt-1">{todo.description}</div>
+                    )}
+
+                    <div className="text-xs text-gray-500 mt-1">
+                        Due: {todo.dueDate || "No due date"}
+                    </div>
+
+                    <div className="flex gap-4 mt-3 text-sm">
+                        <Link to={`/edit/${todo.id}`} className="text-blue-600 hover:underline">
+                            Edit
+                        </Link>
+
+                        <button
+                            onClick={() => dispatch(deleteTodo(todo.id))}
+                            className="text-red-600 hover:underline"
+                        >
+                            Delete
+                        </button>
+                    </div>
+                </div>
             </div>
+
         </div>
     );
 }
+
