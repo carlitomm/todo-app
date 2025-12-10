@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { createCategory } from "../store/slices/categorySlice";
 import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
+import type { ICategory } from "../types/category";
+import type { RootState } from "../store/store";
 
 export default function CategorySelector({ value, onChange }: {
     value: string;
@@ -9,12 +11,12 @@ export default function CategorySelector({ value, onChange }: {
 }) {
 
     const dispatch = useDispatch();
-    const categories = useSelector((state: any) => state.categories.categories);
+    const categories = useSelector((state: RootState) => state.categories.categories);
 
     const [input, setInput] = useState("");
     const [open, setOpen] = useState(false);
 
-    const filtered = categories.filter((c: any) =>
+    const filteredCategories = categories.filter((c: ICategory) =>
         c.name.toLowerCase().includes(input.toLowerCase())
     );
 
@@ -59,8 +61,8 @@ export default function CategorySelector({ value, onChange }: {
             {open && (
                 <div ref={wrapperRef} className="absolute z-10 w-full bg-white shadow rounded-lg mt-1 max-h-40 overflow-auto border">
 
-                    {filtered.length > 0 ? (
-                        filtered.map((c: any) => (
+                    {filteredCategories.length > 0 ? (
+                        filteredCategories.map((c) => (
                             <div
                                 key={c.id}
                                 onClick={() => {
@@ -79,7 +81,7 @@ export default function CategorySelector({ value, onChange }: {
                         </div>
                     )}
 
-                    {input && !filtered.some((c: any) => c.name.toLowerCase() === input.toLowerCase()) && (
+                    {input && !filteredCategories.some((c) => c.name.toLowerCase() === input.toLowerCase()) && (
                         <div
                             onClick={handleCreate}
                             className="px-3 py-2 bg-blue-50 hover:bg-blue-100 cursor-pointer text-blue-600 font-medium border-t"

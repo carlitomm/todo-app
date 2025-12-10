@@ -7,7 +7,7 @@ export default function CategoryForm() {
     const dispatch = useDispatch();
     const [name, setName] = useState("");
 
-    const submit = (e: any) => {
+    const submit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch(addCategory({ id: uuidv4(), name }));
         setName("");

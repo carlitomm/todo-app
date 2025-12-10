@@ -5,6 +5,7 @@ import type { RootState } from "../store/store";
 import { addTodo, createTodo, updateTodo, updateTodoApi } from "../store/slices/todoSlice";
 import { v4 as uuidv4 } from "uuid";
 import CategorySelector from "./CategorySelector";
+import type { ITodo } from "../types/todo";
 
 interface Props {
     editId?: string;
@@ -16,8 +17,9 @@ export default function TodoForm({ editId }: Props) {
 
     const categories = useSelector((state: RootState) => state.categories.categories);
     const existing = useSelector((state: RootState) =>
-        state.todos.todos.find((t: any) => t.id === editId)
+        state.todos.todos.find((t: ITodo) => t.id === editId)
     );
+    const today = new Date().toLocaleDateString("en-CA");
 
     const [title, setTitle] = useState(existing?.title || "");
     const [description, setDescription] = useState(existing?.description || "");
@@ -80,6 +82,7 @@ export default function TodoForm({ editId }: Props) {
             <div className="flex gap-4">
                 <input
                     type="date"
+                    min={today}
                     className="flex-grow border rounded-lg p-2"
                     value={dueDate}
                     onChange={(e) => setDueDate(e.target.value)}
