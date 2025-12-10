@@ -26,36 +26,24 @@ export default function TodoForm({ editId }: Props) {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (editId) {
+        if (!title.trim()) return;
 
-            const editedTodo = {
-                id: editId,
-                title,
-                description,
-                dueDate,
-                completed: existing!.completed,
-                categoryId,
-                createdAt: existing!.createdAt
-            }
-
-            dispatch(updateTodo(editedTodo));
-            dispatch(updateTodoApi(updatedTodo));
-            navigate("/");
-            return;
-        }
-
-        const newTodo = {
-            id: uuidv4(),
+        const todo = {
+            id: editId || uuidv4(),
             title,
             description,
             dueDate,
-            completed: false,
+            completed: existing?.completed ?? false,
             categoryId,
-            createdAt: new Date().toISOString()
-        }
+            createdAt: existing?.createdAt ?? new Date().toISOString(),
+        };
 
-        dispatch(addTodo(newTodo));
-        dispatch(createTodo(newTodo));
+        if (editId) {
+            dispatch(updateTodoApi(todo));
+            navigate("/");
+        } else {
+            dispatch(createTodo(todo));
+        }
 
         setTitle("");
         setDescription("");
@@ -64,37 +52,54 @@ export default function TodoForm({ editId }: Props) {
     };
 
     return (
-        <form onSubmit={handleSubmit} style={{ marginBottom: "20px" }}>
-            <input
-                type="text"
-                placeholder="Todo title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                required
-            />
+        <form onSubmit={handleSubmit} className="mt-6 mb-4 max-w-fit">
 
-            <textarea
-                placeholder="Description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-            />
+            <div className="flex items-center py-2">
+                <input
+                    type="text"
+                    placeholder="Todo title"
+                    className="flex-grow border rounded-lg p-2"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    required
+                />
+                <button type="submit" className="text-gray-500 hover:bg-blue-700 text-white bg-blue-600 hover:text-gray-700 rounded-lg ml-3 p-2">
+                    {editId ? "Save Changes" : "+ Add"}
+                </button>
+            </div>
 
-            <input
-                type="date"
-                value={dueDate}
-                onChange={(e) => setDueDate(e.target.value)}
-            />
+            <div className="space-y-4 bg-white ">
+                <textarea
+                    placeholder="Description"
+                    className="w-full border rounded-lg p-2"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                />
+            </div>
+            <div className="flex gap-4">
+                <input
+                    type="date"
+                    className="flex-grow border rounded-lg p-2"
+                    value={dueDate}
+                    onChange={(e) => setDueDate(e.target.value)}
+                />
 
-            <select value={categoryId} onChange={(e) => setCategoryId(e.target.value)}>
-                <option value="">Select category</option>
-                {categories.map((c: any) => (
-                    <option key={c.id} value={c.id}>{c.name}</option>
-                ))}
-            </select>
+                <select
+                    className="flex-grow border rounded-lg p-2"
+                    value={categoryId}
+                    onChange={(e) => setCategoryId(e.target.value)}
+                >
+                    <option value="">Select category</option>
+                    {categories.map((c) => (
+                        <option key={c.id} value={c.id}>
+                            {c.name}
+                        </option>
+                    ))}
+                </select>
+            </div>
 
-            <button type="submit">
-                {editId ? "Save Changes" : "Add Todo"}
-            </button>
+
+
         </form>
     );
 }

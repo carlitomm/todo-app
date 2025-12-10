@@ -17,7 +17,7 @@ export default function HomePage() {
     }, []);
 
     return (
-        <div style={{ padding: "20px" }}>
+        <div class="text-center flex flex-col items-center p-2">
             <h1>Todo App</h1>
 
             <TodoForm />
