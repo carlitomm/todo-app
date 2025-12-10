@@ -38,3 +38,10 @@ npm run dev
 ```
 
 the app will be available at `http://localhost:5173`
+
+## Demo
+
+
+https://github.com/user-attachments/assets/04f9346c-5239-4b4a-b222-d1d58d433750
+
+
