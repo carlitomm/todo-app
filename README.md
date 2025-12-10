@@ -6,14 +6,35 @@ The project is split into two folders:
 /todo-app-frontend
 /todo-app-backend
 
-1. Backend Setup (Node.js + Express + TypeScript)
+# 1. Backend Setup (Node.js + Express + TypeScript)
 
-### 📁 Folder:
+### Folder:
 `todo-app-backend`
 
-## ✅ Installation
+## Installation
 
 ```bash
 cd todo-app-backend
 npm install
+```
+
+## Run Backend
+```bash
 npm run dev
+```
+
+#2. Frontend Setup (Vite + React + TS + Tailwind + Redux Toolkit)
+
+## Installation
+```bash
+cd todo-app-frontend
+npm install
+```
+
+## Run Frontend
+
+```bash
+npm run dev
+```
+
+the app will be available at `http://localhost:5173`
