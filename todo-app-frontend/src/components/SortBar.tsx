@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setSort } from "../store/slices/todoSlice";
 
 // Icons
-import { ClockIcon, CalendarDaysIcon } from "@heroicons/react/24/outline";
+import { ClockIcon, CalendarDaysIcon, ArrowsUpDownIcon } from "@heroicons/react/24/outline";
 
 export default function SortBar() {
     const dispatch = useDispatch();
@@ -14,7 +14,8 @@ export default function SortBar() {
     ];
 
     return (
-        <div className="flex gap-6 justify-center mt-3">
+        <div className="flex gap-6 justify-center mt-3 items-center">
+            <ArrowsUpDownIcon className="h-4 w-4" />
             {options.map((opt) => {
                 const Icon = opt.icon;
 

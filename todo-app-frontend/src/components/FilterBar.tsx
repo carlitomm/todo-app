@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../store/store";
 import { setFilter } from "../store/slices/todoSlice";
 import { Bars3Icon, ClockIcon, CheckIcon } from "@heroicons/react/24/outline";
+import { FunnelIcon } from "@heroicons/react/24/outline";
 
 export default function FilterBar() {
     const dispatch = useDispatch();
@@ -14,7 +15,8 @@ export default function FilterBar() {
     ];
 
     return (
-        <div className="flex gap-6 justify-center">
+        <div className="flex gap-6 justify-center items-center">
+            <FunnelIcon className="h-4 w-4" />
             {options.map(opt => {
 
                 const Icon = opt.icon;

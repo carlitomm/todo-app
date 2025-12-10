@@ -91,9 +91,6 @@ export default function TodoForm({ editId }: Props) {
                     />
                 </div>
             </div>
-
-
-
         </form>
     );
 }
