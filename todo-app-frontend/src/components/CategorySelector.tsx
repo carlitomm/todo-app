@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { createCategory } from "../store/slices/categorySlice";
 import { useDispatch, useSelector } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
 
 export default function CategorySelector({ value, onChange }: {
     value: string;
@@ -33,7 +34,7 @@ export default function CategorySelector({ value, onChange }: {
     const handleCreate = () => {
         if (!input.trim()) return;
 
-        dispatch(createCategory({ name: input } as any)).then((res: any) => {
+        dispatch(createCategory({ name: input, id: uuidv4() })).then((res: any) => {
             const newCat = res.payload;
             onChange(newCat.id);
             setInput("");

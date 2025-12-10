@@ -82,7 +82,6 @@ export const selectProcessedTodos = (state: RootState) => {
 /** THUNKS */
 export const fetchTodos = createAsyncThunk("todos/fetch", async () => {
     const res = await api.get("/todos");
-    console.log('fetching todos')
     return res.data as ITodo[];
 })
 
