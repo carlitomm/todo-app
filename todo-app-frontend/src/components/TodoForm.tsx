@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import type { RootState } from "../store/store";
 import { addTodo, createTodo, updateTodo, updateTodoApi } from "../store/slices/todoSlice";
 import { v4 as uuidv4 } from "uuid";
+import CategorySelector from "./CategorySelector";
 
 interface Props {
     editId?: string;
@@ -83,19 +84,12 @@ export default function TodoForm({ editId }: Props) {
                     value={dueDate}
                     onChange={(e) => setDueDate(e.target.value)}
                 />
-
-                <select
-                    className="flex-grow border rounded-lg p-2"
-                    value={categoryId}
-                    onChange={(e) => setCategoryId(e.target.value)}
-                >
-                    <option value="">Select category</option>
-                    {categories.map((c) => (
-                        <option key={c.id} value={c.id}>
-                            {c.name}
-                        </option>
-                    ))}
-                </select>
+                <div className="flex-grow">
+                    <CategorySelector
+                        value={categoryId}
+                        onChange={(id) => setCategoryId(id)}
+                    />
+                </div>
             </div>
 
 

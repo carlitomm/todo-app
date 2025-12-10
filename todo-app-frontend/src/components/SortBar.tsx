@@ -1,32 +1,42 @@
 import { useDispatch, useSelector } from "react-redux";
-import type { RootState } from "../store/store";
 import { setSort } from "../store/slices/todoSlice";
+
+// Icons
+import { ClockIcon, CalendarDaysIcon } from "@heroicons/react/24/outline";
 
 export default function SortBar() {
     const dispatch = useDispatch();
-    const sort = useSelector((state: RootState) => state.todos.sort);
+    const sort = useSelector((state: any) => state.todos.sort);
 
     const options = [
-        { id: "created", label: "Created Date" },
-        { id: "due", label: "Due Date" }
+        { id: "created", label: "Created", icon: ClockIcon },
+        { id: "due", label: "Due Date", icon: CalendarDaysIcon }
     ];
 
     return (
-        <div className="flex gap-3 mt-3">
-            {options.map(opt => (
-                <button
-                    key={opt.id}
-                    onClick={() => dispatch(setSort(opt.id as any))}
-                    className={`
-            px-4 py-2 rounded-lg border font-medium
-            ${sort === opt.id
-                            ? "bg-purple-600 text-white border-purple-600"
-                            : "bg-white text-gray-700 hover:bg-gray-100"}
-          `}
-                >
-                    {opt.label}
-                </button>
-            ))}
+        <div className="flex gap-6 justify-center mt-3">
+            {options.map((opt) => {
+                const Icon = opt.icon;
+
+                return (
+                    <button
+                        key={opt.id}
+                        onClick={() => dispatch(setSort(opt.id as any))}
+                        className={`
+              relative pb-1 font-medium flex items-center gap-1 transition
+              text-gray-600 hover:text-purple-500
+              ${sort === opt.id ? "text-purple-600" : ""}
+            `}
+                    >
+                        <Icon className="h-4 w-4" />
+                        {opt.label}
+
+                        {sort === opt.id && (
+                            <span className="absolute left-0 right-0 -bottom-1 mx-auto h-[2px] w-full bg-purple-600 rounded-full"></span>
+                        )}
+                    </button>
+                );
+            })}
         </div>
     );
 }
