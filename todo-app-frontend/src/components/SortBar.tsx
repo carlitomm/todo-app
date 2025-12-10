@@ -1,12 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { setSort } from "../store/slices/todoSlice";
-
-// Icons
 import { ClockIcon, CalendarDaysIcon, ArrowsUpDownIcon } from "@heroicons/react/24/outline";
+import type { RootState } from "../store/store";
 
 export default function SortBar() {
     const dispatch = useDispatch();
-    const sort = useSelector((state: any) => state.todos.sort);
+    const sort = useSelector((state: RootState) => state.todos.sort);
 
     const options = [
         { id: "created", label: "Created", icon: ClockIcon },

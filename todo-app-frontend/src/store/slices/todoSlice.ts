@@ -93,7 +93,7 @@ export const createTodo = createAsyncThunk(
     }
 );
 
-export const updateTodoApi = createAsyncThunk(
+export const updateTodoApi = createAsyncThunk<ITodo, ITodo>(
     "todos/update",
     async (todo: ITodo) => {
         const res = await api.put(`/todos/${todo.id}`, todo);
@@ -101,7 +101,7 @@ export const updateTodoApi = createAsyncThunk(
     }
 );
 
-export const deleteTodoApi = createAsyncThunk(
+export const deleteTodoApi = createAsyncThunk<string, string>(
     "todos/delete",
     async (id: string) => {
         await api.delete(`/todos/${id}`);

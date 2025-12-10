@@ -2,8 +2,13 @@ import { useDispatch } from "react-redux";
 import { deleteTodo, deleteTodoApi, toggleComplete, updateTodoApi } from "../store/slices/todoSlice";
 import { Link } from "react-router-dom";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
+import type { ITodo } from "../types/todo";
 
-export default function TodoItem({ todo }: any) {
+interface TodoItemProps {
+    todo: ITodo;
+}
+
+export default function TodoItem({ todo }: TodoItemProps) {
     const dispatch = useDispatch();
 
     return (

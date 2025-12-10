@@ -32,19 +32,45 @@ const categorySlice = createSlice({
 
 
 /** THUNKS */
-export const fetchCategories = createAsyncThunk(
+export const fetchCategories = createAsyncThunk<
+    ICategory[],
+    void,
+    { rejectValue: string }
+>(
     "categories/fetch",
-    async () => {
-        const res = await api.get("/categories");
-        return res.data as ICategory[];
+    async (_, { rejectWithValue }) => {
+        try {
+            const res = await api.get("/categories");
+            return res.data as ICategory[];
+        } catch (err: any) {
+            const message =
+                err.response?.data?.message ||
+                err.message ||
+                "Failed to fetch categories";
+
+            return rejectWithValue(message);
+        }
     }
 );
 
-export const createCategory = createAsyncThunk(
+export const createCategory = createAsyncThunk<
+    ICategory,
+    ICategory,
+    { rejectValue: string }
+>(
     "categories/create",
-    async (category: ICategory) => {
-        const res = await api.post("/categories", category);
-        return res.data;
+    async (category, { rejectWithValue }) => {
+        try {
+            const res = await api.post("/categories", category);
+            return res.data as ICategory;
+        } catch (err: any) {
+            const message =
+                err.response?.data?.message ||
+                err.message ||
+                "Failed to create category";
+
+            return rejectWithValue(message);
+        }
     }
 );
 

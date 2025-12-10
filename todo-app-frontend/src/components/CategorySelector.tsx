@@ -49,7 +49,7 @@ export default function CategorySelector({ value, onChange }: {
             <input
                 type="text"
                 placeholder="Category..."
-                value={input || categories.find((c: any) => c.id === value)?.name || ""}
+                value={input || categories.find((c) => c.id === value)?.name || ""}
                 onChange={(e) => {
                     setInput(e.target.value);
                     setOpen(true);
